@@ -79,7 +79,7 @@ signIn.addEventListener("click", (event)=>{
     const email = document.getElementById("email").value;
     const password = document.getElementById("password").value;
 
-    const auth = getAuth();
+    
     signInWithEmailAndPassword(auth, email, password).then((user)=>{
         alert("Welcome Back " + " "+user?.user.email);
         
