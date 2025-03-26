@@ -92,7 +92,7 @@ signIn.addEventListener("click", (event)=>{
 document.getElementById("forgotPassword").addEventListener("click", (event) => {
     event.preventDefault();
 
-    const email = document.getElementById("rEmail").value;
+    const email = document.getElementById("email").value;
 
     if (!email) {
         alert("Please enter your email to reset the password.");
