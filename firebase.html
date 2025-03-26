@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register & Login</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script type="module" src="firebaseAuth.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Poppins", sans-serif;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            overflow: hidden;
+            position: relative;
+        }
+
+        body::before {
+            content: "";
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backdrop-filter: blur(10px);
+            z-index: -1;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.9);
+            width: 400px;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .container:hover {
+            transform: scale(1.02);
+        }
+
+        .form-title {
+            font-size: 1.8rem;
+            font-weight: bold;
+            margin-bottom: 1.2rem;
+            color: #444;
+        }
+
+        .input-group {
+            position: relative;
+            margin-bottom: 1.5rem;
+            text-align: left;
+        }
+
+        .input-group i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #666;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 12px 15px;
+            padding-left: 40px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            transition: 0.3s;
+        }
+
+        .input-group input:focus {
+            border-color: #667eea;
+            outline: none;
+            box-shadow: 0 0 10px rgba(102, 126, 234, 0.5);
+        }
+
+        button {
+            font-size: 1.2rem;
+            padding: 10px 0;
+            border-radius: 5px;
+            border: none;
+            width: 100%;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            cursor: pointer;
+            transition: background 0.3s, transform 0.2s;
+        }
+
+        button:hover {
+            background: linear-gradient(135deg, #5a67d8, #6b46c1);
+            transform: scale(1.05);
+        }
+
+        .recover {
+            text-align: right;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .recover a {
+            text-decoration: none;
+            color: #667eea;
+        }
+
+        .recover a:hover {
+            text-decoration: underline;
+        }
+
+        .or {
+            font-size: 1rem;
+            margin-top: 1rem;
+            color: #777;
+        }
+
+        .icons {
+            display: flex;
+            justify-content: center;
+            margin-top: 1rem;
+        }
+
+        .icons i {
+            font-size: 1.5rem;
+            margin: 0 10px;
+            color: #667eea;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .icons i:hover {
+            color: #5a67d8;
+        }
+
+        .links {
+            display:block;
+            justify-content: space-between;
+            text-align: center;
+            
+            margin-top: 1rem;
+            font-size: 1rem;
+        }
+
+        .links button {
+            background: none;
+            color: #667eea;
+            font-size: 1rem;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .links button:hover {
+            text-decoration: underline;
+            color: #5a67d8;
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="signUp" style="display: none;">
+        <h1 class="form-title">Register</h1>
+        <form>
+            <div class="input-group">
+                <i class="fas fa-user"></i>
+                <input type="text" id="fName" placeholder="First Name" required autocomplete="off"/>
+            </div>
+
+            <div class="input-group">
+                <i class="fas fa-user"></i>
+                <input type="text" id="lName" placeholder="Last Name" required autocomplete="off"/>
+            </div>
+
+            <div class="input-group">
+                <i class="fas fa-envelope"></i>
+                <input type="email" id="rEmail" placeholder="Email" required autocomplete="off"/>
+            </div>
+
+            <div class="input-group">
+                <i class="fas fa-lock"></i>
+                <input type="password" id="rPassword" placeholder="Password" required autocomplete="new-password"/>
+            </div>
+
+            <button id="submitSignUp">Sign Up</button>
+        </form>
+
+        
+        <div class="icons">
+            <i class="fab fa-google" id="googleIcon"></i>
+            <i class="fab fa-facebook" id="fbIcon"></i>
+        </div>
+
+        <div class="links">
+            <p></p>
+            <button id="signInButton">Already a user😻..Click Here👇</button>
+        </div>
+    </div>
+
+    <div class="container" id="signIn" >
+        <h1 class="form-title">Sign In</h1>
+        <form>
+            <div class="input-group">
+                <i class="fas fa-envelope"></i>
+                <input type="email" id="email" placeholder="Email" required autocomplete="off"/>
+            </div>
+
+            <div class="input-group">
+                <i class="fas fa-lock"></i>
+                <input type="password" id="password" placeholder="Password" required autocomplete="new-password"/>
+            </div>
+
+            <p class="recover">
+                <a href="#" id="forgotPassword">Forgot Password🤦‍♀️</a>
+            </p>
+
+            <button id="submitSignIn">Sign In</button>
+        </form>
+
+        
+        <div class="icons">
+            <i class="fab fa-google" id="googleIcon"></i>
+            <i class="fab fa-facebook" id="fbIcon"></i>
+        </div>
+
+        <div class="links">
+            <p style="width:fit-content"></p>
+            <button id="signUpButton">New Commer🤔.. Click Here👇</button>
+        </div>
+    </div>
+    <script src="firebase.js"></script>
+</body>
+</html>
